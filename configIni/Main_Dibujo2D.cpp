@@ -1,182 +1,151 @@
-//Arely Olvera González
-//Práctica 2
-//Fecha de entrega: 20/08/25
-//No. de cuenta: 319209608
-
 #include<iostream>
+
+//#define GLEW_STATIC
+
 #include <GL/glew.h>
+
 #include <GLFW/glfw3.h>
+
+// Shaders
 #include "Shader.h"
-#include <vector>
 
 void resize(GLFWwindow* window, int width, int height);
 
 const GLint WIDTH = 800, HEIGHT = 600;
 
+
 int main() {
-    glfwInit();
+	glfwInit();
+	//Verificaci�n de compatibilidad 
+	/*glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 2 Arely Olvera", NULL, NULL);
-    glfwSetFramebufferSizeCallback(window, resize);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Dibujo de Primitivas en 2D", NULL, NULL);
+	glfwSetFramebufferSizeCallback(window, resize);
+	
+	//Verificaci�n de errores de creacion  ventana
+	if (window== NULL) 
+	{
+		std::cout << "Failed to create GLFW window" << std::endl;
+		glfwTerminate();
 
-    if (window == NULL) {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return EXIT_FAILURE;
-    }
+		return EXIT_FAILURE;
+	}
 
-    glfwMakeContextCurrent(window);
-    glewExperimental = GL_TRUE;
+	glfwMakeContextCurrent(window);
+	glewExperimental = GL_TRUE;
 
-    if (GLEW_OK != glewInit()) {
-        std::cout << "Failed to initialise GLEW" << std::endl;
-        return EXIT_FAILURE;
-    }
+	//Verificaci�n de errores de inicializaci�n de glew
 
-    std::cout << "> Version: " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "> Vendor: " << glGetString(GL_VENDOR) << std::endl;
-    std::cout << "> Renderer: " << glGetString(GL_RENDERER) << std::endl;
-    std::cout << "> SL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+	if (GLEW_OK != glewInit()) {
+		std::cout << "Failed to initialise GLEW" << std::endl;
+		return EXIT_FAILURE;
+	}
+
+	// Imprimimos informacin de OpenGL del sistema
+	std::cout << "> Version: " << glGetString(GL_VERSION) << std::endl;
+	std::cout << "> Vendor: " << glGetString(GL_VENDOR) << std::endl;
+	std::cout << "> Renderer: " << glGetString(GL_RENDERER) << std::endl;
+	std::cout << "> SL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+
+
+	// Define las dimensiones del viewport
+	//glViewport(0, 0, screenWidth, screenHeight);
 
     Shader ourShader("Shader/core.vs", "Shader/core.frag");
 
-    // Patrón del logo de Batman (1 = amarillo, 0 = negro)
-    
-    int pattern[24][25] = {
-        {0,0,0,0,0,0,0,0,0,1,1,1,1, 1, 1, 1, 0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,0,0,0,0,0,0},
-        {0,0,0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0,0,0,0,0},
-        {0,0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0,0,0,0},
-        {0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,0,0},
-        { 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0,0},
-        { 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1,0},
-        { 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1,0},
-        { 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1,1},
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,1},
-        {1,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,1},
-        {1,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,1},
-        {1,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,1},
-        {1,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,1},
-        {1,1,0,0,0,0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1,0,0,0,0,1,1},
-        {0,1,0,0,0,1,1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0,1,1,0,0,0,1,0},
-        {0,1,1,0,0,1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0,1,1,0,0,1,1,0},
-        {0,0,1,1,0,0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1,1,0,0,1,1,0,0},
-        {0,0,0,1,1,0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1,0,0,1,1,0,0,0},
-        {0,0,0,0,1,1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0,0,1,1,0,0,0,0},
-        {0,0,0,0,0,1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1,1,1,0,0,0,0,0 },
-        {0,0,0,0,0,0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0, 0, 1, 1, 1, 1, 1, 1, 1,0,0,0,0,0,0,0,0,0}
-    };
+	// Set up vertex data (and buffer(s)) and attribute pointers
+	float vertices[] = {
+		0.5f,  0.5f, 0.0f,    1.0f,0.0f,0.0f,  // top right
+		0.5f, -0.5f, 0.0f,    1.0f,1.0f,0.0f,  // bottom right
+		-0.5f, -0.5f, 0.0f,   1.0f,0.0f,1.0f,  // bottom left
+		-0.5f,  0.5f, 0.0f,   1.0f,1.0f,0.0f, // top left 
+	};
+	unsigned int indices[] = {  // note that we start from 0!
+		3,2,1,// second Triangle
+		0,1,3,
+		
+	};
 
-    std::vector<float> vertices;
-    std::vector<unsigned int> indices;
 
-    // Generar vértices e índices para cada píxel
-    float pixelSize = 0.06f;  // Tamaño de cada píxel
-    float startX = -0.72f;    // Posición inicial X (centrado)
-    float startY = 0.72f;     // Posición inicial Y (centrado)
 
-    unsigned int vertexIndex = 0;
+	GLuint VBO, VAO,EBO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
-    for (int row = 0; row < 24; row++) {
-        for (int col = 0; col < 25; col++) {
-            if (pattern[row][col] != -1) { // solo dibuja píxeles visibles
-                float x = startX + col * pixelSize;
-                float y = startY - row * pixelSize;
+	// Enlazar  Vertex Array Object
+	glBindVertexArray(VAO);
 
-                // Determinamos color basado en el patrón
-                float r, g, b;
-                if (pattern[row][col] == 1) { // Amarillo
-                    r = 1.0f; g = 0.84f; b = 0.0f;
-                }
-                else { // Negro
-                    r = 0.0f; g = 0.0f; b = 0.0f;
-                }
+	//2.- Copiamos nuestros arreglo de vertices en un buffer de vertices para que OpenGL lo use
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	// 3.Copiamos nuestro arreglo de indices en  un elemento del buffer para que OpenGL lo use
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-                // Crear un cuadrado (2 triángulos) para cada píxel
-                // Vértice inferior izquierdo
-                vertices.push_back(x); vertices.push_back(y - pixelSize); vertices.push_back(0.0f);
-                vertices.push_back(r); vertices.push_back(g); vertices.push_back(b);
+	// 4. Despues colocamos las caracteristicas de los vertices
 
-                // Vértice inferior derecho
-                vertices.push_back(x + pixelSize); vertices.push_back(y - pixelSize); vertices.push_back(0.0f);
-                vertices.push_back(r); vertices.push_back(g); vertices.push_back(b);
+	//Posicion
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)0);
+	glEnableVertexAttribArray(0);
 
-                // Vértice superior derecho
-                vertices.push_back(x + pixelSize); vertices.push_back(y); vertices.push_back(0.0f);
-                vertices.push_back(r); vertices.push_back(g); vertices.push_back(b);
+	//Color
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)(3*sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
 
-                // Vértice superior izquierdo
-                vertices.push_back(x); vertices.push_back(y); vertices.push_back(0.0f);
-                vertices.push_back(r); vertices.push_back(g); vertices.push_back(b);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-                // Índices para dos triángulos que forman un cuadrado
-                // Primer triángulo
-                indices.push_back(vertexIndex);
-                indices.push_back(vertexIndex + 1);
-                indices.push_back(vertexIndex + 2);
 
-                // Segundo triángulo
-                indices.push_back(vertexIndex);
-                indices.push_back(vertexIndex + 2);
-                indices.push_back(vertexIndex + 3);
+	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 
-                vertexIndex += 4;
-            }
-        }
-    }
 
-    GLuint VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+	
+	while (!glfwWindowShouldClose(window))
+	{
+		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+		glfwPollEvents();
 
-    glBindVertexArray(VAO);
+		// Render
+		// Clear the colorbuffer
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 
-    // Cargar datos de vértices
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 
-    // Cargar datos de índices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
-
-    // Configurar atributos de vértices
-    // Posición
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    // Color
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
-    while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
-
-        // Fondo de la cuadrícula
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        // Dibujar 
+		// Draw our first triangle
         ourShader.Use();
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+
+        glPointSize(1);
+        glDrawArrays(GL_POINTS,0,1);
+        
+        //glDrawArrays(GL_LINES,0,2);
+        //glDrawArrays(GL_LINE_LOOP,0,4);
+        
+        glDrawArrays(GL_TRIANGLES,0,3);
+        glDrawElements(GL_TRIANGLES, 3,GL_UNSIGNED_INT,0);
+
+        
+        
         glBindVertexArray(0);
+    
+		// Swap the screen buffers
+		glfwSwapBuffers(window);
+	}
 
-        glfwSwapBuffers(window);
-    }
 
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
-    glfwTerminate();
-    return EXIT_SUCCESS;
+
+	glfwTerminate();
+	return EXIT_SUCCESS;
 }
 
-void resize(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
+void resize(GLFWwindow* window, int width, int height)
+{
+	// Set the Viewport to the size of the created window
+	glViewport(0, 0, width, height);
+	//glViewport(0, 0, screenWidth, screenHeight);
 }
