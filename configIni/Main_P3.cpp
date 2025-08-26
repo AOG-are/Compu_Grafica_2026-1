@@ -1,6 +1,6 @@
 //Arely Olvera González
-//Previo 3
-//Fecha de entrega: 23/08/25
+//Práctica 3
+//Fecha de entrega: 26/08/25
 //No. de cuenta: 319209608
 
 #include<iostream>
@@ -34,7 +34,7 @@ int main() {
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Previo 3 Arely Olvera", nullptr, nullptr);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Práctica 3 Arely Olvera", nullptr, nullptr);
 
 	int screenWidth, screenHeight;
 
@@ -223,9 +223,11 @@ int main() {
 		glm::mat4 model=glm::mat4(1);
 		glm::mat4 view=glm::mat4(1);
 	
-		view = glm::translate(view, glm::vec3(0.0f,0.0f,-12.0f));
-		model = glm::rotate( model, 0.5f, glm::vec3( 0.0f, 1.0f, 0.0f )); // use to compare orthographic and perspective projection
-		model = glm::scale(model, glm::vec3(2.0f, 3.0f, 1.0f));
+		//1er cubo
+		view = glm::translate(view, glm::vec3(-10.055f,-6.8f,-17.0f));
+		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::rotate( model, 1.5708f, glm::vec3( 0.0f, -12.0f, 0.0f )); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(2.6f, 2.6f, 2.6f));
 		//view = glm::translate( view, glm::vec3( screenWidth / 2, screenHeight / 4,-800.0f ) ); // use with orthographic projection
 		
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
@@ -238,20 +240,48 @@ int main() {
 		
 
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 36); 
+
+		//2do cubo
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3 (5.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, 45.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // use to compare orthographic and perspective projection
-		model = glm::scale(model, glm::vec3(8.0f, 1.0f, 5.0f));
+		model = glm::translate(model, glm::vec3 (3.5f, 0.0f, 0.0f));
+		model = glm::rotate(model, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(2.6f, 2.6f, 2.6f));
+
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//3er cubo
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(6.45f, 0.0f, 0.0f));
+		model = glm::rotate(model, 3.1416f, glm::vec3(0.1f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.6f, 2.6f, 2.6f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//4to cubo
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(1.75f, 2.55f, 0.0f));
+		model = glm::rotate(model, 4.7124f, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//5to cubo
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(5.10f, 2.55f, 0.0f));
+		model = glm::rotate(model, 1.5708f, glm::vec3(0.0f, 12.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
 		glBindVertexArray(0);
 
-
-
-		
-		
-		
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
