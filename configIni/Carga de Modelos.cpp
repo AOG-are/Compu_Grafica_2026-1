@@ -1,6 +1,6 @@
 ////Arely Olvera González
 //Previo 6
-//Fecha de entrega:  15/09/25
+//Fecha de entrega:  18/09/25
 //No. de cuenta: 319209608
 
 
@@ -101,9 +101,15 @@ int main( )
     
     // Load models
     Model dog((char*)"Models/RedDog.obj");
+
+    //Carga del nuevo modelo (gato)
+    Model cat((char*)"Models/CAT_02.obj");
+
+    //Matriz de proyección
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
     
-  
+    
+   
 
     // Game loop
     while (!glfwWindowShouldClose(window))
@@ -127,7 +133,7 @@ int main( )
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-        // Draw the loaded model
+        // Dibujo del perro
         glm::mat4 model(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         dog.Draw(shader);
@@ -137,6 +143,15 @@ int main( )
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         dog.Draw(shader);
 
+        ////Dibujamos gato
+        glm::mat4 modelCat(1);
+        modelCat = glm::translate(modelCat, glm::vec3(-3.0f, 0.0f, 0.0f));
+        modelCat = glm::rotate(modelCat, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+       
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelCat));
+        cat.Draw(shader);
+
+       
 
         // Swap the buffers
         glfwSwapBuffers( window );
