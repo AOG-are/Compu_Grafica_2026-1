@@ -1,0 +1,47 @@
+newmtl BodySG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl CampaignSG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl HandleBarSG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl HandleGripSG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl SaddleSG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl WheelsSG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png

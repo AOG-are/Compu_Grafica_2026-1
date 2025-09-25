@@ -1,0 +1,74 @@
+# Blender 3.5.1 MTL File: 'Playground_v2.blend'
+# www.blender.org
+
+newmtl Metal
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd MetalBaseColor_2048px.png
+map_Ns MetalRoughness_2048px.png
+map_refl MetalMetallic_2048px.png
+map_Bump -bm 1.000000 MetalNormal_2048px.png
+
+newmtl PlasticRoof
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd RoofBaseColor_2048px.png
+map_Ns RoofRoughness_2048px.png
+map_refl RoofMetallic_2048px.png
+map_Bump -bm 1.000000 RoofNormal_2048px.png
+
+newmtl PlasticSlide
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd SlideBaseColor_2048px.png
+map_Ns SlideRoughness_2048px.png
+map_refl SlideMetallic_2048px.png
+map_Bump -bm 1.000000 SlideNormal_2048px.png
+
+newmtl Rope
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd RopesBaseColor_2048px.png
+map_Ns RopesRoughness_2048px.png
+map_refl RopesMetallic_2048px.png
+map_Bump -bm 1.000000 RopesNormal_2048px.png
+
+newmtl Rubber
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd SwingBaseColor_2048px.png
+map_Ns SwingRoughness_2048px.png
+map_refl SwingMetallic_2048px.png
+map_Bump -bm 1.000000 SwingNormal_2048px.png
+
+newmtl Wood
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PlanksBaseColor_2048px.png
+map_Ns PlanksRoughness_2048px.png
+map_refl PlanksMetallic_2048px.png
+map_Bump -bm 1.000000 PlanksNormal_2048px.png

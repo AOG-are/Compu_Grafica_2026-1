@@ -1,0 +1,49 @@
+# Blender MTL File: 'Table Bench .blend'
+# Material Count: 3
+
+newmtl Metal_
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Metal_A.png
+map_Ka Metal_A.png
+map_Ks Metal_A_SPEC.png
+map_Bump Metal_A_NRM.png
+map_disp Metal_A_DISP.png
+
+newmtl Wood_A
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Wood_A.jpg
+map_Ka Wood_A.jpg
+map_Ks Wood_A_SPEC.jpg
+map_Bump Wood_A_NRM.jpg
+map_disp Wood_A_DISP.jpg
+map_d Wood_A_OCC.jpg
+
+newmtl Wood__B
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Wood_B.jpg
+map_Ka Wood_B.jpg
+map_Ks Wood_B_SPEC.jpg
+map_Bump Wood_B_NRM.jpg
+map_disp Wood_B_DISP.jpg
+map_d Wood_B_OCC.jpg
