@@ -1,0 +1,401 @@
+# Blender 4.5.3 LTS MTL File: 'Practica9.blend'
+# www.blender.org
+
+newmtl BodySG
+Ns 0.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl CampaignSG
+Ns 0.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl HandleBarSG
+Ns 0.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl HandleGripSG
+Ns 0.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl Material.001
+Ns 324.000031
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd colors.png
+
+newmtl Material.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd texture_diffuse.png
+
+newmtl Material.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd texture_diffuse.png
+
+newmtl Material.004
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd texture_diffuse.png
+
+newmtl Material.005
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd texture_diffuse.png
+
+newmtl Material.006
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd texture_diffuse.png
+
+newmtl Material.007
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd texture_diffuse.png
+
+newmtl Material__1547.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd 1024-1.png
+
+newmtl Material__1553.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 1
+map_Kd glass_wall.png
+map_d glass_wall.png
+
+newmtl Metal
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd MetalBaseColor_2048px.png
+map_Ns MetalRoughness_2048px.png
+map_refl MetalMetallic_2048px.png
+map_Bump -bm 1.000000 MetalNormal_2048px.png
+
+newmtl Metal_
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Metal_A.png
+map_Ks Metal_A_SPEC.png
+map_Bump Metal_A_NRM.png
+
+newmtl None
+Ns 499.999969
+Ka 1.000000 1.000000 1.000000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd colors.png
+
+newmtl PlasticRoof
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd RoofBaseColor_2048px.png
+map_Ns RoofRoughness_2048px.png
+map_refl RoofMetallic_2048px.png
+map_Bump -bm 1.000000 RoofNormal_2048px.png
+
+newmtl PlasticSlide
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd SlideBaseColor_2048px.png
+map_Ns SlideRoughness_2048px.png
+map_refl SlideMetallic_2048px.png
+map_Bump -bm 1.000000 SlideNormal_2048px.png
+
+newmtl Rabbit_Tris_Material
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Rabbit_Tris_Diffuse.png
+map_Ns Rabbit_Tris_Roughness.png
+map_Bump -bm 1.000000 Rabbit_Tris_Normal.png
+
+newmtl Rope
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd RopesBaseColor_2048px.png
+map_Ns RopesRoughness_2048px.png
+map_refl RopesMetallic_2048px.png
+map_Bump -bm 1.000000 RopesNormal_2048px.png
+
+newmtl Rubber
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd SwingBaseColor_2048px.png
+map_Ns SwingRoughness_2048px.png
+map_refl SwingMetallic_2048px.png
+map_Bump -bm 1.000000 SwingNormal_2048px.png
+
+newmtl SaddleSG
+Ns 0.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Texture_albedo.jpg
+
+newmtl WheelsSG
+Ns 0.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Kids_Cycle_M_Cycle_BaseColor.png
+
+newmtl Wood
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PlanksBaseColor_2048px.png
+map_Ns PlanksRoughness_2048px.png
+map_refl PlanksMetallic_2048px.png
+map_Bump -bm 1.000000 PlanksNormal_2048px.png
+
+newmtl Wood_A
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+illum 2
+map_Kd Wood_A.jpg
+map_Ks Wood_A_SPEC.jpg
+map_d Wood_A_OCC.jpg
+map_Bump Wood_A_NRM.jpg
+
+newmtl Wood__B
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+illum 2
+map_Kd Wood_B.jpg
+map_Ks Wood_B_SPEC.jpg
+map_d Wood_B_OCC.jpg
+map_Bump Wood_B_NRM.jpg
+
+newmtl light_lamp
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 6.599999 2.704765 0.600337
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl standardSurface1
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd standardSurface1_Base_Color.png
+map_Ns standardSurface1_Roughness.png
+map_refl standardSurface1_Metallic.png
+map_Bump -bm 1.000000 standardSurface1_Normal_OpenGL.png
+
+newmtl sup
+Ns 382.148773
+Ka 0.509091 0.509091 0.509091
+Kd 0.024633 0.024633 0.024633
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl sup_inside
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl tripo_mat_61362500-76d9-402d-815a-45f9a3c865f8
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd Color_7c0ec996-cf6b-498a-a581-82a24d8f65b2.png
+map_d Color_7c0ec996-cf6b-498a-a581-82a24d8f65b2.png
+map_Bump -bm 1.000000 NormalGL_7c0ec996-cf6b-498a-a581-82a24d8f65b2.png
+
+newmtl wood
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd wood_texture.jpg
+
+newmtl Матеріал
+Ns 205.010330
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Без назви.png
+
+newmtl Матеріал.001
+Ns 91.115707
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Без назви.png
+
+newmtl Матеріал.002
+Ns 91.115707
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Без назви.png
+
+newmtl Матеріал.003
+Ns 324.000031
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Матеріал.004
+Ns 324.000031
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Матеріал.005
+Ns 205.010330
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Без назви.png
