@@ -1,6 +1,6 @@
 //Arely Olvera González
-//Previo 10
-//Fecha de entrega: 23/10/25
+//Practica 10
+//Fecha de entrega: 28/10/25
 //No. de cuenta: 319209608
 
 #include <iostream>
@@ -102,20 +102,16 @@ float vertices[] = {
 };
 
 
-
 glm::vec3 Light1 = glm::vec3(0);
 //Anim
-float rotBall = 0;
+float rotBall = 0; //rotación de la pelota
+float rotDog = 0; //rotación del perro
+// Definición de nuevas variables para la animación 
+float ciclo = 0.0f; 
+float incliDog = 0.0f; //inclinación del perro
+float moviDog = 0.0f; //movimiento del perro
+float moviBall = 0.0f; //movimiento de la pelota
 bool AnimBall = false;
-
-// Definición de nuevas variables para la animación vertical
-float ballHeight = 0.5f;  // Comienza en la nariz del perro
-const float ballMaxHeight = 1.39f; // Altura máxima (nivel de la luz)
-const float ballMinHeight = -0.11f; // Altura mínima (nariz del perro)
-bool ballMoving = false;  // Estado del movimiento de la pelota (detenida o en movimiento)
-float ballSpeed = 1.5f;   // Velocidad del movimiento de la pelota
-bool goingDown = true;    // Indica si la pelota está descendiendo o ascendiendo
-
 
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
@@ -133,7 +129,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Previo 10 Arely Olvera", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 10 Arely Olvera", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -167,7 +163,6 @@ int main()
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
-
 	Shader lightingShader("Shader/lighting.vs", "Shader/lighting.frag");
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 	
@@ -175,7 +170,6 @@ int main()
 	Model Dog((char*)"Models/RedDog.obj");
 	Model Piso((char*)"Models/piso.obj");
 	Model Ball((char*)"Models/ball.obj");
-
 
 
 	// First, set the container's VAO (and VBO)
@@ -282,29 +276,35 @@ int main()
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-
 		glm::mat4 model(1);
 
-	
-		
-		//Carga de modelo 
-        view = camera.GetViewMatrix();	
+		//Carga de modelos
+        //Modelo del piso
+		view = camera.GetViewMatrix();	
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 
+		//Modelo del Perro
 		model = glm::mat4(1);
+		model = glm::rotate(model, glm::radians(rotDog), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, incliDog, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, moviDog, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
 		Dog.Draw(lightingShader);
 
+		//Modelo de la pelota
 		model = glm::mat4(1);
 		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		model = glm::translate(model, glm::vec3(0.0f, ballHeight, 0.0f)); //Nueva línea
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
 		model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, moviBall, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	    Ball.Draw(lightingShader); 
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
@@ -336,8 +336,6 @@ int main()
 		
 		glBindVertexArray(0);
 
-
-
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
 	}
@@ -366,13 +364,11 @@ void DoMovement()
 	{
 		camera.ProcessKeyboard(BACKWARD, deltaTime);
 
-
 	}
 
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
 	{
 		camera.ProcessKeyboard(LEFT, deltaTime);
-
 
 	}
 
@@ -445,50 +441,44 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 			Light1 = glm::vec3(0);//Cuado es solo un valor en los 3 vectores pueden dejar solo una componente
 		}
 	}
-	/*if (keys[GLFW_KEY_N])
+	if (keys[GLFW_KEY_N])
 	{
 		AnimBall = !AnimBall;
 		
-	}*/
-
-	if (keys[GLFW_KEY_M] && action == GLFW_PRESS) {
-		if (ballMoving) {
-			// Si está en movimiento, forzar que se detenga abajo
-			ballMoving = false;
-			ballHeight = ballMinHeight; // Fijar posición abajo
-			goingDown = true; // Preparar para movimiento descendente 
-		}
-		else {
-			// Si estaba detenida, iniciar movimiento hacia abajo
-			ballMoving = true;
-			goingDown = true;
-		}
-
 	}
 
 }
 void Animation() {
 	if (AnimBall) {
-		rotBall += 0.2f;  // Incrementa la rotación de la pelota si está habilitada la animación
+		rotBall += 0.03f; 
+		rotDog -= 0.03f;
+		ciclo += 0.03f;
+
+		float m180 = fmod(ciclo, 180.0f);
+		if (m180 >= 160.0f || m180 <= 20.0f)
+		{
+			float anguloGiro180 = m180 <= 20.0f ? m180 + 20.0f : m180 - 160.0f;
+			float t = anguloGiro180 / 40.0f;
+			float tilt = sin((anguloGiro180 / 40.0f) * glm::pi<float>());
+			incliDog = -glm::radians(20.0f) * tilt;
+
+			moviDog = sin(t * glm::pi<float>()) * 0.5f;
+			moviBall = -sin(t * glm::pi<float>()) * 0.5f;
+		}
+		else
+		{
+			incliDog = 0.0f;
+			moviDog = 0.0f;
+			moviBall = 0.0f;
+		}
+	}
+	else
+	{
+		//rotBall = 0.0f;
 	}
 
-	if (ballMoving) {
-		if (goingDown) {
-			ballHeight -= ballSpeed * deltaTime;  // Desciende la pelota si goingDown es verdadero
-			if (ballHeight <= ballMinHeight) {
-				ballHeight = ballMinHeight;  // Fija la pelota en la posición mínima
-				goingDown = false;  // Cambia la dirección del movimiento a ascendente
-			}
-		}
-		else {
-			ballHeight += ballSpeed * deltaTime;  // Sube la pelota si goingDown es falso
-			if (ballHeight >= ballMaxHeight) {
-				ballHeight = ballMaxHeight;  // Fija la pelota en la posición máxima
-				goingDown = true;  // Cambia la dirección del movimiento a descendente
-			}
-		}
-	}
 }
+
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 {
