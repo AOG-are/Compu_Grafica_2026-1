@@ -1,6 +1,6 @@
 //Arely Olvera González
-//Practica 10
-//Fecha de entrega: 28/10/25
+//Previo 11
+//Fecha de entrega: 30/10/25
 //No. de cuenta: 319209608
 
 #include <iostream>
@@ -102,16 +102,23 @@ float vertices[] = {
 };
 
 
+
 glm::vec3 Light1 = glm::vec3(0);
 //Anim
-float rotBall = 0; //rotación de la pelota
-float rotDog = 0; //rotación del perro
-// Definición de nuevas variables para la animación 
-float ciclo = 0.0f; 
-float incliDog = 0.0f; //inclinación del perro
-float moviDog = 0.0f; //movimiento del perro
-float moviBall = 0.0f; //movimiento de la pelota
+float rotBall = 0.0f;
 bool AnimBall = false;
+bool AnimDog = false;
+float rotDog = 0.0f;
+int dogAnim = 0;
+float FLegs = 0.0f;
+float RLegs = 0.0f;
+float head = 0.0f;
+float tail = 0.0f;
+glm::vec3 dogPos (0.0f,0.0f,0.0f);
+float dogRot = 0.0f;
+bool step = false;
+
+
 
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
@@ -129,7 +136,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 10 Arely Olvera", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Previo 11 Arely Olvera", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -163,13 +170,21 @@ int main()
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
+
 	Shader lightingShader("Shader/lighting.vs", "Shader/lighting.frag");
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 	
 	//models
-	Model Dog((char*)"Models/RedDog.obj");
+	Model DogBody((char*)"Models/DogBody.obj");
+	Model HeadDog((char*)"Models/HeadDog.obj");
+	Model DogTail((char*)"Models/TailDog.obj");
+	Model F_RightLeg((char*)"Models/F_RightLegDog.obj");
+	Model F_LeftLeg((char*)"Models/F_LeftLegDog.obj");
+	Model B_RightLeg((char*)"Models/B_RightLegDog.obj");
+	Model B_LeftLeg((char*)"Models/B_LeftLegDog.obj");
 	Model Piso((char*)"Models/piso.obj");
 	Model Ball((char*)"Models/ball.obj");
+
 
 
 	// First, set the container's VAO (and VBO)
@@ -213,6 +228,11 @@ int main()
 	   
 		// OpenGL options
 		glEnable(GL_DEPTH_TEST);
+
+		
+		glm::mat4 modelTemp = glm::mat4(1.0f); //Temp
+		
+	
 
 		// Use cooresponding shader when setting uniforms/drawing objects
 		lightingShader.Use();
@@ -276,35 +296,69 @@ int main()
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
+
 		glm::mat4 model(1);
 
-		//Carga de modelos
-        //Modelo del piso
-		view = camera.GetViewMatrix();	
+	
+		
+		//Carga de modelo 
+        view = camera.GetViewMatrix();	
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 
-		//Modelo del Perro
 		model = glm::mat4(1);
-		model = glm::rotate(model, glm::radians(rotDog), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, incliDog, glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, moviDog, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
-		Dog.Draw(lightingShader);
+		//Body
+		modelTemp= model = glm::translate(model, dogPos);
+		modelTemp= model = glm::rotate(model, glm::radians(dogRot), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		DogBody.Draw(lightingShader);
+		//Head
+		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.0f, 0.093f, 0.208f));
+		model = glm::rotate(model, glm::radians(head), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		HeadDog.Draw(lightingShader);
+		//Tail 
+		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.0f, 0.026f, -0.288f));
+		model = glm::rotate(model, glm::radians(tail), glm::vec3(0.0f, 0.0f, -1.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
+		DogTail.Draw(lightingShader);
+		//Front Left Leg
+		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.112f, -0.044f, 0.074f));
+		model = glm::rotate(model, glm::radians(FLegs), glm::vec3(-1.0f, 0.0f, 0.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		F_LeftLeg.Draw(lightingShader);
+		//Front Right Leg
+		model = modelTemp; 
+		model = glm::translate(model, glm::vec3(-0.111f, -0.055f, 0.074f));
+		model = glm::rotate(model, glm::radians(FLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		F_RightLeg.Draw(lightingShader);
+		//Back Left Leg
+		model = modelTemp; 
+		model = glm::translate(model, glm::vec3(0.082f, -0.046, -0.218)); 
+		model = glm::rotate(model, glm::radians(RLegs), glm::vec3(1.0f, 0.0f, 0.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
+		B_LeftLeg.Draw(lightingShader);
+		//Back Right Leg
+		model = modelTemp; 
+		model = glm::translate(model, glm::vec3(-0.083f, -0.057f, -0.231f));
+		model = glm::rotate(model, glm::radians(RLegs), glm::vec3(-1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		B_RightLeg.Draw(lightingShader); 
 
-		//Modelo de la pelota
+
 		model = glm::mat4(1);
 		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
 		model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, moviBall, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	    Ball.Draw(lightingShader); 
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
@@ -336,6 +390,8 @@ int main()
 		
 		glBindVertexArray(0);
 
+
+
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
 	}
@@ -364,11 +420,13 @@ void DoMovement()
 	{
 		camera.ProcessKeyboard(BACKWARD, deltaTime);
 
+
 	}
 
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
 	{
 		camera.ProcessKeyboard(LEFT, deltaTime);
+
 
 	}
 
@@ -433,7 +491,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		active = !active;
 		if (active)
 		{
-			Light1 = glm::vec3(1.0f, 1.0f, 0.0f);
+			Light1 = glm::vec3(0.2f, 0.8f, 1.0f);
 			
 		}
 		else
@@ -446,39 +504,54 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		AnimBall = !AnimBall;
 		
 	}
+	if (keys[GLFW_KEY_B])
+	{
+		dogAnim = 1;
 
+	}
+	
 }
 void Animation() {
-	if (AnimBall) {
-		rotBall += 0.05f; 
-		rotDog -= 0.05f;
-		ciclo += 0.05f;
+	if (AnimBall)
+	{
+		rotBall += 0.4f;
+		//printf("%f", rotBall);
+	}
+	
+	if (AnimDog)
+	{
+		rotDog -= 0.3f;
+		//printf("%f", rotBall);
+	}
+	if (dogAnim == 1) { //animación para caminar
+		if (!step) { //estado en falso
+			RLegs += 0.1f;
+			FLegs += 0.1f;
+			head += 0.1f;
+			tail += 0.1f;
 
-		float m180 = fmod(ciclo, 180.0f);
-		if (m180 >= 160.0f || m180 <= 20.0f)
-		{
-			float anguloGiro180 = m180 <= 20.0f ? m180 + 20.0f : m180 - 160.0f;
-			float t = anguloGiro180 / 40.0f;
-			float tilt = sin((anguloGiro180 / 40.0f) * glm::pi<float>());
-			incliDog = -glm::radians(20.0f) * tilt;
-
-			moviDog = sin(t * glm::pi<float>()) * 0.5f;
-			moviBall = -sin(t * glm::pi<float>()) * 0.5f;
+			if (RLegs >15.0f) //condición 
+				step = true; 
 		}
 		else
 		{
-			incliDog = 0.0f;
-			moviDog = 0.0f;
-			moviBall = 0.0f;
+			RLegs -= 0.1f;
+			FLegs -= 0.1f;
+			head -= 0.1f;
+			tail -= 0.1f;
+			if (RLegs < -15.0f) //condición 
+				step = false;
+		}
+		// Agregamos una condición para detener al perro antes de que el piso termine
+		if (dogPos.z < 2.32f) {  // Ajustamos el valor al tamaño del piso
+			dogPos.z += 0.001;
+		}
+		else {
+			dogAnim = 0;  // Se detiene la animación cuando llega al límite
 		}
 	}
-	else
-	{
-		//rotBall = 0.0f;
-	}
-
 }
-
+	
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 {
