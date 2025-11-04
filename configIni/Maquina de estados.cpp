@@ -1,6 +1,6 @@
 //Arely Olvera González
-//Previo 11
-//Fecha de entrega: 30/10/25
+//Practica 11
+//Fecha de entrega: 03/11/25
 //No. de cuenta: 319209608
 
 #include <iostream>
@@ -117,7 +117,9 @@ float tail = 0.0f;
 glm::vec3 dogPos (0.0f,0.0f,0.0f);
 float dogRot = 0.0f;
 bool step = false;
-
+//Nuevas variables
+int walkState = 0; //controlador del estado de la animación
+float targetRotation = 0.0f; //variable para el ángulo al que debe llegar el perro cuando está rotando
 
 
 // Deltatime
@@ -136,7 +138,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Previo 11 Arely Olvera", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 11 Arely Olvera", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -515,23 +517,23 @@ void Animation() {
 	if (AnimBall)
 	{
 		rotBall += 0.4f;
-		//printf("%f", rotBall);
 	}
-	
+
 	if (AnimDog)
 	{
 		rotDog -= 0.3f;
-		//printf("%f", rotBall);
 	}
-	if (dogAnim == 1) { //animación para caminar
-		if (!step) { //estado en falso
+
+	if (dogAnim == 1) {
+		// Animación de las piernas (igual para todos los estados)
+		if (!step) {
 			RLegs += 0.1f;
 			FLegs += 0.1f;
 			head += 0.1f;
 			tail += 0.1f;
 
-			if (RLegs >15.0f) //condición 
-				step = true; 
+			if (RLegs > 15.0f)
+				step = true;
 		}
 		else
 		{
@@ -539,19 +541,85 @@ void Animation() {
 			FLegs -= 0.1f;
 			head -= 0.1f;
 			tail -= 0.1f;
-			if (RLegs < -15.0f) //condición 
+			if (RLegs < -15.0f)
 				step = false;
 		}
-		// Agregamos una condición para detener al perro antes de que el piso termine
-		if (dogPos.z < 2.32f) {  // Ajustamos el valor al tamaño del piso
-			dogPos.z += 0.001;
+
+		// Estados de movimiento
+		if (walkState == 0) {  // Camina hacia adelante
+			if (dogPos.z < 2.32f) {
+				dogPos.z += 0.001;
+			}
+			else {
+				walkState = 1;  // Cambiamos al estado de rotación
+				targetRotation = -90.0f;  // Rotar 90 grados a la derecha
+			}
 		}
-		else {
-			dogAnim = 0;  // Se detiene la animación cuando llega al límite
+		else if (walkState == 1) {  // Rotar a la derecha
+			if (dogRot > targetRotation) {
+				dogRot -= 0.15f;  // Velocidad de rotación
+			}
+			else {
+				dogRot = targetRotation;
+				walkState = 2;  // Cambiamos al estado para caminar a la derecha
+			}
+		}
+		else if (walkState == 2) {  // Camina hacia la derecha
+			if (dogPos.x > -2.32f) {  // tamaño del piso
+				dogPos.x -= 0.001;
+			}
+			else {
+				walkState = 3;  // Cambiamos al siguiente estado
+				targetRotation = -180.0f;  // Rotación de 90 grados (total 180°)
+			}
+		}
+		else if (walkState == 3) {  // Vuelve a rotar a la derecha
+			if (dogRot > targetRotation) {
+				dogRot -= 0.15f; //Velocidad de rotación
+			}
+			else {
+				dogRot = targetRotation;
+				walkState = 4;  // Cambia el estado para caminar hacia la parte trasera del escenario
+			}
+		}
+		else if (walkState == 4) {  // Camina en Z negativo
+			if (dogPos.z > -2.32f) {  // tamaño del piso
+				dogPos.z -= 0.001;
+			}
+			else {
+				walkState = 5;  // Cambiamos al siguiente estado
+				targetRotation = 45.0f;  // Rotar 45° 
+			}
+		}
+		else if (walkState == 5) {  // Rota 45° para diagonal
+			if (dogRot > targetRotation) {
+				dogRot -= 0.15f; //velocidad de rotacion
+			}
+			else {
+				dogRot = targetRotation;
+				walkState = 6;  // Cambiamos para caminar en diagonal
+			}
+		}
+		else if (walkState == 6) {  // Camina en diagonal al origen
+			// Calcular distancia al origen
+			float distanceToOrigin = sqrt(dogPos.x * dogPos.x + dogPos.z * dogPos.z);
+
+			if (distanceToOrigin > 0.01f) {  
+				dogPos.x += 0.001 * cos(glm::radians(45.0f));  // Movimiento en X
+				dogPos.z += 0.001 * sin(glm::radians(45.0f));  // Movimiento en Z
+			}
+			else {
+				// Ajustar posición exacta al origen
+				dogPos = glm::vec3(0.0f, 0.0f, 0.0f);
+				dogRot = 0.0f;  // Resetear rotación
+				walkState = 0; //Resetear al estado inicial
+				dogAnim = 0;  // Detener animación
+			}
+		}
+	
 		}
 	}
-}
-	
+
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 {
