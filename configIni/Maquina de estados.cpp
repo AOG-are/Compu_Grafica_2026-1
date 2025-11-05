@@ -1,6 +1,6 @@
 //Arely Olvera González
 //Practica 11
-//Fecha de entrega: 03/11/25
+//Fecha de entrega: 04/11/25
 //No. de cuenta: 319209608
 
 #include <iostream>
